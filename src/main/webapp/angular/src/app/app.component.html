@@ -1,0 +1,56 @@
+<header class="navbar navbar-expland navbar-dark flex-column flex-md-row bd-navbar">
+  <h3 style="color: white">Welcome to ChatRoom</h3>
+</header>
+<div *ngIf="login_show" class="container" id="login" align="center">
+  <h2>Sign In</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-6">
+        <form class="form-inline" [formGroup]="loginInfo" (ngSubmit)="onSubmit(loginInfo)">
+          <label for="user">Nick Name: </label>
+          <input type="text" id="user" class="form-control"
+                 placeholder="Enter your name" formControlName="userName">
+          <label for="room"> Room: </label>
+          <select id="room" class="form-control" formControlName="roomName">
+            <option *ngFor="let room of rooms" [value]="room">{{room}}</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Enter</button>
+        </form>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="chat_show" class="container" id="chat" align="center">
+  <form id="do-chat">
+    <!--<h2 id="alert" class="alert alert-success">{{alert}}</h2>-->
+    <table id="response" class="table table-bordered">
+      <tr *ngFor="let message of list">
+        <td class="received">{{message.received.substring(0, 8)}}</td>
+        <td class="user">{{message.sender}}</td>
+        <td class="message">{{message.content}}</td>
+      </tr>
+    </table>
+
+    <br/>
+    <fieldset>
+      <legend>Enter your message</legend>
+      <div class="controls" style="padding: 5px;width:600px;height:150px">
+        <input type="text" class="input-block-level"
+               placeholder="What do you want to say?" [value]="inputMessage"
+               (input)="inputMessage = $event.target.value"
+               style="padding: 5px; width:500px; height:60px"/><br/><br/>
+        <button type="submit" class="btn btn-large btn-block btn-primary" (click)="sendMessage()"
+                value="Send Message">Send Message
+        </button>
+        <button class="btn btn-large btn-block" (click)="leaveRoom()"
+                type="button" id="leave-room">Exit Room
+        </button>
+      </div>
+    </fieldset>
+  </form>
+</div>
